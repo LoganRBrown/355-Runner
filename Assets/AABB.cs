@@ -4,57 +4,35 @@ using UnityEngine;
 
 public class AABB : MonoBehaviour {
 
-    float minX;
-    float maxX;
-    float minY;
-    float maxY;
-    float minZ;
-    float maxZ;
-
-    public float halfW;
-    public float halfH;
-    public float halfL;
-
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    //public void setSize(float w, float h, float l)
-    //{
-    //    halfW = w / 2;
-    //    halfH = h / 2;
-    //    halfL = l / 2;
-    //}
-
-    public void calcEdges(float x, float y, float z)
+    public static bool Collision(GameObject a, GameObject b)
     {
-        minX = x - halfW;
-        maxX = x + halfW;
-        minY = y - halfH;
-        maxY = y + halfH;
-        minZ = z - halfL;
-        maxZ = z + halfL;
-    }
+        float aMinX = a.transform.position.x - (a.transform.localScale.x / 2);
+        float aMaxX = a.transform.position.x + (a.transform.localScale.x / 2);
+        float aMinY = a.transform.position.y - (a.transform.localScale.y / 2);
+        float aMaxY = a.transform.position.y + (a.transform.localScale.y / 2);
+        float aMinZ = a.transform.position.z - (a.transform.localScale.z / 2);
+        float aMaxZ = a.transform.position.z + (a.transform.localScale.z / 2);
 
-    public bool Collision(GameObject a, GameObject b)
-    {
+        float bMinX = b.transform.position.x - (b.transform.localScale.x / 2);
+        float bMaxX = b.transform.position.x + (b.transform.localScale.x / 2);
+        float bMinY = b.transform.position.y - (b.transform.localScale.y / 2);
+        float bMaxY = b.transform.position.y + (b.transform.localScale.y / 2);
+        float bMinZ = b.transform.position.z - (b.transform.localScale.z / 2);
+        float bMaxZ = b.transform.position.z + (b.transform.localScale.z / 2);
 
-        if (a.minX <= b.maxX && a.maxX >= b.minX) return false;
-        if (a.minY <= b.maxY && a.maxY >= b.minY) return false;
-        if (a.minZ <= b.maxZ && a.maxZ >= b.minZ) return false;
 
+        if (aMinX<= bMaxX && aMaxX >= bMinX)
+        {
+            if (aMinY <= bMaxY && aMaxY >= bMinY)
+            {
+                if (aMinZ <= bMaxZ && aMaxZ >= bMinZ)
+                {
+                    Debug.Log("hit");
+                    return false;
+                }
+            }
+            
+        }
         return true;
-    }
-
-    public Vector3 findFix()
-    {
-        Vector3 solution = new Vector3();
-
-        return solution;
     }
 }
