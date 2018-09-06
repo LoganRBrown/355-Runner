@@ -33,9 +33,9 @@ public class SceneController : MonoBehaviour {
 
         for (int I = 0; I < wallsArray.Length; I++)
         {
-            if (prefabPlayer) ;
+            AABB.Collision(prefabPlayer, wallsArray[I]);
         }
 
-        AABB.Collision(prefabPlayer, prefabWall);
+        
     }
 }
