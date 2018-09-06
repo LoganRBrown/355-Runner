@@ -6,11 +6,13 @@ public class SceneController : MonoBehaviour {
 
     public GameObject prefabWall;
     public GameObject prefabPlayer;
+    List<GameObject> walls;
+    GameObject[] wallsArray;
     float delayUntilSpawn = 0;
     Vector3 playerPos = new Vector3(0, 0, 0);
 
 	void Start () {
-        prefabPlayer = GameObject.FindWithTag("Player");
+        
     }
 	
 	// Update is called once per frame
@@ -23,25 +25,17 @@ public class SceneController : MonoBehaviour {
         {
             Vector3 pos = new Vector3(0, 0, 20);
             Instantiate(prefabWall, pos, Quaternion.identity);
+            walls.Add(prefabWall);
             delayUntilSpawn = Random.Range(1, 3);
         }
 
-        //Collision(prefabPlayer, prefabWall);
-	}
+        wallsArray = walls.ToArray();
 
-    //private bool Collision(GameObject a,GameObject b)
-    //{
-    //    float minX;
-    //    float maxX;
-    //    float minY;
-    //    float maxY;
-    //    float minZ;
-    //    float maxZ;
+        for (int I = 0; I < wallsArray.Length; I++)
+        {
+            if (prefabPlayer) ;
+        }
 
-    //    if (a.minX <= b.maxX && a.maxX >= b.minX) return false;
-    //    if (a.minY <= b.maxY && a.maxY >= b.minY) return false;
-    //    if (a.minZ <= b.maxZ && a.maxZ >= b.minZ) return false;
-
-    //    return true;
-    //}
+        AABB.Collision(prefabPlayer, prefabWall);
+    }
 }
