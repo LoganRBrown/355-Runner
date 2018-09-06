@@ -5,22 +5,21 @@ using UnityEngine;
 public class ObstacleMovement : MonoBehaviour {
 
     const float speed = -10;
-    public float laneWidth = 2;
-    float X = 0;
+    public float laneWidth = 200;
+    float x = 0;
     float lane = 0;
 
 	// Use this for initialization
 	void Start () {
-        lane = Random.Range(-1, 1);
-
-        
+        lane = Random.Range(-1, 2);
 
         float targetX = lane * laneWidth;
-        X = (targetX - transform.position.x) * .1f;
+        x = (targetX - transform.position.x);
+        Debug.Log(lane);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position += new Vector3(X, 0, speed) * Time.deltaTime;
+        transform.position += new Vector3(x, 0, speed) * Time.deltaTime;
 	}
 }

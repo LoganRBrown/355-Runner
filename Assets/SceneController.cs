@@ -25,7 +25,7 @@ public class SceneController : MonoBehaviour {
         {
             Vector3 pos = new Vector3(0, 0, 20);
             Instantiate(prefabWall, pos, Quaternion.identity);
-            delayUntilSpawn = Random.Range(1, 3);
+            delayUntilSpawn = Random.Range(1, 2);
             walls.Add(prefabWall);
         }
 
@@ -33,7 +33,11 @@ public class SceneController : MonoBehaviour {
 
         for (int I = 0; I < wallsArray.Length; I++)
         {
-            AABB.Collision(prefabPlayer, wallsArray[I]);
+            if(!AABB.Collision(prefabPlayer, wallsArray[I]))
+            {
+                Destroy(wallsArray[I]);
+            }
+
         }
 
 
