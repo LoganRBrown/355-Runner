@@ -38,6 +38,10 @@ public class SceneController : MonoBehaviour {
                 Debug.Log("hit");
                 Destroy(walls[I]);
             }
+            if(walls[I].transform.position.z <= -11)
+            {
+                Destroy(walls[I]);
+            }
 
         }
 
