@@ -12,21 +12,21 @@ public class SceneController : MonoBehaviour {
     Vector3 playerPos = new Vector3(0, 0, 0);
 
 	void Start () {
-        
+        Instantiate(prefabPlayer, playerPos, Quaternion.identity);
     }
 	
 	// Update is called once per frame
 	void Update () {
-       
-        Instantiate(prefabPlayer, playerPos, Quaternion.identity);
 
+        
+       
         delayUntilSpawn -= Time.deltaTime;
         if (delayUntilSpawn <= 0)
         {
             Vector3 pos = new Vector3(0, 0, 20);
             Instantiate(prefabWall, pos, Quaternion.identity);
-            walls.Add(prefabWall);
             delayUntilSpawn = Random.Range(1, 3);
+            walls.Add(prefabWall);
         }
 
         wallsArray = walls.ToArray();
@@ -36,6 +36,6 @@ public class SceneController : MonoBehaviour {
             AABB.Collision(prefabPlayer, wallsArray[I]);
         }
 
-        
+
     }
 }
