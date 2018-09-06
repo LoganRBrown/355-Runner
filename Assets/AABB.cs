@@ -4,35 +4,70 @@ using UnityEngine;
 
 public class AABB : MonoBehaviour {
 
-    public static bool Collision(GameObject a, GameObject b)
+    MeshRenderer _mesh; //private field
+
+    public MeshRenderer mesh
     {
-        float aMinX = a.transform.position.x - (a.transform.localScale.x / 2);
-        float aMaxX = a.transform.position.x + (a.transform.localScale.x / 2);
-        float aMinY = a.transform.position.y - (a.transform.localScale.y / 2);
-        float aMaxY = a.transform.position.y + (a.transform.localScale.y / 2);
-        float aMinZ = a.transform.position.z - (a.transform.localScale.z / 2);
-        float aMaxZ = a.transform.position.z + (a.transform.localScale.z / 2);
-
-        float bMinX = b.transform.position.x - (b.transform.localScale.x / 2);
-        float bMaxX = b.transform.position.x + (b.transform.localScale.x / 2);
-        float bMinY = b.transform.position.y - (b.transform.localScale.y / 2);
-        float bMaxY = b.transform.position.y + (b.transform.localScale.y / 2);
-        float bMinZ = b.transform.position.z - (b.transform.localScale.z / 2);
-        float bMaxZ = b.transform.position.z + (b.transform.localScale.z / 2);
-
-
-        if (aMinX<= bMaxX && aMaxX >= bMinX)
+        get
         {
-            if (aMinY <= bMaxY && aMaxY >= bMinY)
-            {
-                if (aMinZ <= bMaxZ && aMaxZ >= bMinZ)
-                {
-                    Debug.Log("hit");
-                    return false;
-                }
-            }
-            
+            if (!_mesh) _mesh = GetComponent<MeshRenderer>();
+            return _mesh;
         }
+    }
+
+    public Bounds bounds
+    {
+        get
+        {
+            return mesh.bounds;
+        }
+    }
+
+    [HideInInspector]public bool isDoneChecking = false;
+
+    bool isOverlapping = false;
+
+    void Start()
+    {
+        CollisionController.Add(this);
+    }
+
+    void OnDestroy()
+    {
+        CollisionController.Remove(this);
+    }
+
+    void Update()
+    {
+        isDoneChecking = false;
+        isOverlapping = false;
+    }
+
+    void OnDrawGizmos()
+    { 
+        Gizmos.color = isOverlapping ? Color.red: Color.blue;
+        Gizmos.DrawWireCube(transform.position, mesh.bounds.size);
+    }
+    /// <summary>
+    /// Checks to see if some other AABB overlaps this AABB.
+    /// </summary>
+    /// <param name="othr">The other AABB component to check against.</param>
+    /// <returns>if true, the two AABBs overlap</returns>
+    public bool CheckOverlap(AABB othr)
+    {
+        if (othr.bounds.min.x > this.bounds.max.x) return false;
+        if (othr.bounds.max.x < this.bounds.min.x) return false;
+        if (othr.bounds.min.y > this.bounds.max.y) return false;
+        if (othr.bounds.max.y < this.bounds.min.y) return false;
+        if (othr.bounds.min.z > this.bounds.max.z) return false;
+        if (othr.bounds.max.z < this.bounds.min.z) return false;
+
+
         return true;
+    }
+
+    void OverlappingAABB(AABB other)
+    {
+        isOverlapping = true;
     }
 }

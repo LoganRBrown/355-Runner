@@ -6,7 +6,7 @@ public class SceneController : MonoBehaviour {
 
     public GameObject prefabWall;
     public GameObject prefabPlayer;
-    List<GameObject> walls;
+    List<GameObject> walls = new List<GameObject>();
     float delayUntilSpawn = 0;
     Vector3 playerPos = new Vector3(0, 0, 0);
 
@@ -30,20 +30,20 @@ public class SceneController : MonoBehaviour {
 
         
 
-        for (int I = 0; I < walls.Count; I++)
-        {
-            Debug.Log("here");
-            if(!AABB.Collision(prefabPlayer, walls[I]))
-            {
-                Debug.Log("hit");
-                Destroy(walls[I]);
-            }
-            if(walls[I].transform.position.z <= -11)
-            {
-                Destroy(walls[I]);
-            }
+        //for (int I = 0; I < walls.Count; I++)
+        //{
+        //    Debug.Log("here");
+        //    if()
+        //    {
+        //        Debug.Log("hit");
+        //        Destroy(walls[I]);
+        //    }
+        //    if(walls[I].transform.position.z <= -11)
+        //    {
+        //        Destroy(walls[I]);
+        //    }
 
-        }
+        //}
 
 
     }
