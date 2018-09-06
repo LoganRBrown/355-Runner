@@ -9,7 +9,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: Untagged
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -30,7 +34,7 @@ GameObject:
   - component: {fileID: 114841624301947552}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +100,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1002954541978992}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5152bb1451c14644896bb772b94b7179, type: 3}
   m_Name: 
@@ -113,4 +117,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ff8441d77089d4098e2961e5612970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  halfsize: {x: 0, y: 0, z: 0}
+  isDoneChecking: 0
