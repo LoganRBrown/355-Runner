@@ -10,7 +10,7 @@ public class SceneController : MonoBehaviour {
     Vector3 playerPos = new Vector3(0, 0, 0);
 
 	void Start () {
-       
+        prefabPlayer = GameObject.FindWithTag("Player");
     }
 	
 	// Update is called once per frame
