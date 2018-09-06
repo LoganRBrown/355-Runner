@@ -7,7 +7,6 @@ public class SceneController : MonoBehaviour {
     public GameObject prefabWall;
     public GameObject prefabPlayer;
     List<GameObject> walls;
-    GameObject[] wallsArray;
     float delayUntilSpawn = 0;
     Vector3 playerPos = new Vector3(0, 0, 0);
 
@@ -24,18 +23,20 @@ public class SceneController : MonoBehaviour {
         if (delayUntilSpawn <= 0)
         {
             Vector3 pos = new Vector3(0, 0, 20);
-            Instantiate(prefabWall, pos, Quaternion.identity);
+            GameObject wall = Instantiate(prefabWall, pos, Quaternion.identity);
             delayUntilSpawn = Random.Range(1, 2);
-            walls.Add(prefabWall);
+            walls.Add(wall);
         }
 
-        wallsArray = walls.ToArray();
+        
 
-        for (int I = 0; I < wallsArray.Length; I++)
+        for (int I = 0; I < walls.Count; I++)
         {
-            if(!AABB.Collision(prefabPlayer, wallsArray[I]))
+            Debug.Log("here");
+            if(!AABB.Collision(prefabPlayer, walls[I]))
             {
-                Destroy(wallsArray[I]);
+                Debug.Log("hit");
+                Destroy(walls[I]);
             }
 
         }

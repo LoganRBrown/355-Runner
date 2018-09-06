@@ -15,7 +15,6 @@ public class ObstacleMovement : MonoBehaviour {
 
         float targetX = lane * laneWidth;
         x = (targetX - transform.position.x);
-        Debug.Log(lane);
     }
 	
 	// Update is called once per frame
