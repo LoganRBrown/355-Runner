@@ -21,5 +21,23 @@ public class SceneController : MonoBehaviour {
             Instantiate(prefabWall, pos, Quaternion.identity);
             delayUntilSpawn = Random.Range(1, 3);
         }
+
+        Collision(Player, prefabWall);
 	}
+
+    bool Collision(Player, prefabWall)
+    {
+        float minX;
+        float maxX;
+        float minY;
+        float maxY;
+        float minZ;
+        float maxZ;
+
+        if (a.minX <= b.maxX && a.maxX >= b.minX) return false;
+        if (a.minY <= b.maxY && a.maxY >= b.minY) return false;
+        if (a.minZ <= b.maxZ && a.maxZ >= b.minZ) return false;
+
+        return true;
+    }
 }
