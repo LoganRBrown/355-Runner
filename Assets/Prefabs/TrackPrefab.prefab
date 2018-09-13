@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 114926880604682486}
   m_Layer: 0
   m_Name: TrackPrefab
-  m_TagString: Untagged
+  m_TagString: Track
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -342,6 +342,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointIn: {fileID: 4323900102406398}
   pointOut: {fileID: 4229841716478292}
+  speed: 10
+  isDead: 0
   wallSpawnPoints:
   - {fileID: 4682561272924752}
   - {fileID: 4103722937150652}
