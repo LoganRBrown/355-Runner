@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour {
             {
                 lane++;
             }
-            lane = Mathf.Clamp(lane, -1, 1);
+            
         }
 
         if (Input.GetButtonDown("Jump"))
@@ -85,12 +85,22 @@ public class PlayerMovement : MonoBehaviour {
         }
         if(other.tag == "Wall")
         {
-            transform.position += new Vector3(0, 0, -1) * Time.deltaTime;
+            transform.position += new Vector3(0, 0, -1);
         }
 
         if(other.tag == "Track")
         {
             transform.position += new Vector3(0, 1, 0) * Time.deltaTime;
+        }
+
+        if(other.tag == "TrackWall" && transform.position.x > 0)
+        {
+            transform.position += new Vector3(-1, 0, 0);
+        }
+
+        if (other.tag == "TrackWall" && transform.position.x < 0)
+        {
+            transform.position += new Vector3(1, 0, 0);
         }
     }
 
@@ -99,6 +109,7 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 pos = (transform.position);
 
         Bullet newBullet = Instantiate(prefabBullet, pos, Quaternion.identity);
+        newBullet.transform.Rotate(0, 0, 90);
         bullets.Add(newBullet);
     }
 

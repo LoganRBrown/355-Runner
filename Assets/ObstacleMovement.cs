@@ -11,10 +11,10 @@ public class ObstacleMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        lane = Random.Range(-1, 2);
+        //lane = Random.Range(-1, 2);
 
-        float targetX = lane * laneWidth;
-        x = (targetX - transform.position.x);
+        //float targetX = lane * laneWidth;
+        //x = (targetX - transform.position.x);
     }
 	
 	// Update is called once per frame

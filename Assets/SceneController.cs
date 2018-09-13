@@ -35,7 +35,7 @@ public class SceneController : MonoBehaviour {
             }
         }
 
-        if (tracks.Count < 5) SpawnTrack();
+        if (tracks.Count < 10) SpawnTrack();
 
        if(prefabPlayer.transform.position.z <= -5)
         {
@@ -47,7 +47,7 @@ public class SceneController : MonoBehaviour {
 
     void SpawnTrack()
     {
-        while (tracks.Count < 5)
+        while (tracks.Count < 10)
         {
             Vector3 ptOut = new Vector3(0, -.5f, -10);
             if(tracks.Count > 0)ptOut = tracks[tracks.Count - 1].pointOut.position;
