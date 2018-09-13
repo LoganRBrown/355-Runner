@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour {
     public float laneWidth = 2;
     int lane = 0;
 
+    public bool isDead = false;
+
 	void Start () {
 		
 	}
@@ -32,7 +34,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (Input.GetButtonDown("Jump"))
         {
-            spawnBullet();
+            SpawnBullet();
         }
 
         for(int i = bullets.Count - 1; i >= 0; i--)
@@ -48,6 +50,10 @@ public class PlayerMovement : MonoBehaviour {
 
         float x = (targetX - transform.position.x) * .1f;
         transform.position += new Vector3(x, 0, 0);
+
+        if (transform.position.z <= -5) isDead = true;
+
+        CheckDeath();
 	}
 
     void OverlappingAABB(AABB other)
@@ -65,16 +71,29 @@ public class PlayerMovement : MonoBehaviour {
         }
         if(other.tag == "Wall")
         {
-            //must be a wall
-            //Destroy(other.gameObject);
+            transform.position += new Vector3(0, 0, -1);
         }
+
+        //if(other.tag)
     }
 
-    void spawnBullet()
+    void SpawnBullet()
     {
         Vector3 pos = (transform.position);
 
         Bullet newBullet = Instantiate(prefabBullet, pos, Quaternion.identity);
         bullets.Add(newBullet);
+    }
+
+    void CheckDeath()
+    {
+        if (isDead)
+        {
+            for (int i = bullets.Count - 1; i >= 0; i--)
+            {
+                    Destroy(bullets[i].gameObject);
+                    bullets.RemoveAt(i); 
+            }
+        }
     }
 }

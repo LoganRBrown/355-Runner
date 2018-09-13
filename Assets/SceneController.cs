@@ -14,6 +14,8 @@ public class SceneController : MonoBehaviour {
     List<Track> tracks = new List<Track>();
     //public [] prefabTracks For using different track prefabs
 
+    public bool playerIsDead = false;
+
 	void Start () {
         Instantiate(prefabPlayer, playerPos, Quaternion.identity);
 
@@ -34,6 +36,13 @@ public class SceneController : MonoBehaviour {
         }
 
         if (tracks.Count < 5) SpawnTrack();
+
+       if(prefabPlayer.transform.position.z <= -5)
+        {
+            playerIsDead = true;
+        }
+
+        CheckGameOver();
     }
 
     void SpawnTrack()
@@ -51,6 +60,23 @@ public class SceneController : MonoBehaviour {
 
             Track newTrack = Instantiate(prefabTrack, pos, Quaternion.identity);
             tracks.Add(newTrack);
+        }
+    }
+
+    void CheckGameOver()
+    {
+        if (playerIsDead)
+        {
+            
+            for(int i = tracks.Count - 1; i>=0; i--)
+            {
+                Destroy(tracks[i].gameObject);
+                tracks.RemoveAt(i);
+            }
+
+            Destroy(prefabPlayer.gameObject);
+
+            //Should force the game to stop Here.
         }
     }
 }

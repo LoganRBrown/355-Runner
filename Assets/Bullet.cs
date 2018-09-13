@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    const float speed = 10;
+    const float speed = 20;
 
     [HideInInspector] public bool isDead = false;
 
@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
     {
         transform.position += new Vector3(0, 0, speed) * Time.deltaTime;
 
-        if (transform.position.z >= 200)
+        if (transform.position.z >= 15)
         {
             isDead = true;
         }
