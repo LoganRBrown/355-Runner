@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+    public Bullet prefabBullet;
+    List<Bullet> bullets = new List<Bullet>();
+
     public float laneWidth = 2;
     int lane = 0;
 
@@ -25,6 +28,20 @@ public class PlayerMovement : MonoBehaviour {
                 lane++;
             }
             lane = Mathf.Clamp(lane, -1, 1);
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            spawnBullet();
+        }
+
+        for(int i = bullets.Count - 1; i >= 0; i--)
+        {
+            if (bullets[i].isDead)
+            {
+                Destroy(bullets[i].gameObject);
+                bullets.RemoveAt(i);
+            }
         }
 
         float targetX = lane * laneWidth;
@@ -49,7 +66,15 @@ public class PlayerMovement : MonoBehaviour {
         if(other.tag == "Wall")
         {
             //must be a wall
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
         }
+    }
+
+    void spawnBullet()
+    {
+        Vector3 pos = (transform.position);
+
+        Bullet newBullet = Instantiate(prefabBullet, pos, Quaternion.identity);
+        bullets.Add(newBullet);
     }
 }
