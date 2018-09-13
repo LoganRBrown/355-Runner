@@ -6,8 +6,8 @@ public class ObstacleMovement : MonoBehaviour {
 
     const float speed = -10;
     public float laneWidth = 200;
-    float x = 0;
-    float lane = 0;
+    //float x = 0;
+    //float lane = 0;
 
 	// Use this for initialization
 	void Start () {

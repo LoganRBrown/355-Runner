@@ -7,14 +7,15 @@ public class SceneController : MonoBehaviour {
     public GameObject prefabWall;
     public GameObject prefabPlayer;
     public Track prefabTrack;
-    List<GameObject> walls = new List<GameObject>();
-    float delayUntilSpawn = 0;
-    Vector3 playerPos = new Vector3(0, 0, 0);
+    //float delayUntilSpawn = 0;
+    Vector3 playerPos = new Vector3(0, 20, 0);
 
     List<Track> tracks = new List<Track>();
     //public [] prefabTracks For using different track prefabs
 
     public bool playerIsDead = false;
+
+    [HideInInspector] public int score = 0;
 
 	void Start () {
         Instantiate(prefabPlayer, playerPos, Quaternion.identity);

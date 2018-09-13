@@ -22,15 +22,10 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        print(transform.position.y);
         velocity += new Vector3(0, GRAVITY, 0) * Time.deltaTime;
 
         transform.position += velocity * Time.deltaTime;
-        if(transform.position.y < 0)
-        {
-            Vector3 pos = transform.position;
-            pos.y = 0;
-            transform.position = pos;
-        }
 
         float h = Input.GetAxisRaw("Horizontal");
         if (Input.GetButtonDown("Horizontal"))
@@ -90,10 +85,12 @@ public class PlayerMovement : MonoBehaviour {
 
         if(other.tag == "Track")
         {
-            transform.position += new Vector3(0, 1, 0) * Time.deltaTime;
+            Vector3 pos = transform.position;
+            pos.y = 1;
+            transform.position = pos;
         }
 
-        if(other.tag == "TrackWall" && transform.position.x > 0)
+        if (other.tag == "TrackWall" && transform.position.x > 0)
         {
             transform.position += new Vector3(-1, 0, 0);
         }
@@ -109,7 +106,7 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 pos = (transform.position);
 
         Bullet newBullet = Instantiate(prefabBullet, pos, Quaternion.identity);
-        newBullet.transform.Rotate(0, 0, 90);
+        newBullet.transform.Rotate(90, 0, 0);
         bullets.Add(newBullet);
     }
 
