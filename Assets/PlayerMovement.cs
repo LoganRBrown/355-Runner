@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour {
 
     Vector3 velocity = new Vector3(0, 0, 0);
 
+    Vector3 playerPos = new Vector3(0, 0, 0);
+
     public Bullet prefabBullet;
     List<Bullet> bullets = new List<Bullet>();
 
@@ -26,6 +28,13 @@ public class PlayerMovement : MonoBehaviour {
         velocity += new Vector3(0, GRAVITY, 0) * Time.deltaTime;
 
         transform.position += velocity * Time.deltaTime;
+
+        if (transform.position.y < .5) // if on the ground:
+        {
+            playerPos = transform.position; // copy the position
+            playerPos.y = .5f; // clamp y value
+            transform.position = playerPos;
+        }
 
         float h = Input.GetAxisRaw("Horizontal");
         if (Input.GetButtonDown("Horizontal"))
@@ -83,12 +92,10 @@ public class PlayerMovement : MonoBehaviour {
             transform.position += new Vector3(0, 0, -1);
         }
 
-        if(other.tag == "Track")
-        {
-            Vector3 pos = transform.position;
-            pos.y = 1;
-            transform.position = pos;
-        }
+        //if(other.tag == "Track")
+        //{
+        //    transform.position = playerPos;
+        //}
 
         if (other.tag == "TrackWall" && transform.position.x > 0)
         {
