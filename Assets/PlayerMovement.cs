@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+    const float GRAVITY = -10;
+
+    Vector3 velocity = new Vector3(0, 0, 0);
+
     public Bullet prefabBullet;
     List<Bullet> bullets = new List<Bullet>();
 
@@ -18,6 +22,16 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        velocity += new Vector3(0, GRAVITY, 0) * Time.deltaTime;
+
+        transform.position += velocity * Time.deltaTime;
+        if(transform.position.y < 0)
+        {
+            Vector3 pos = transform.position;
+            pos.y = 0;
+            transform.position = pos;
+        }
+
         float h = Input.GetAxisRaw("Horizontal");
         if (Input.GetButtonDown("Horizontal"))
         {
@@ -71,10 +85,13 @@ public class PlayerMovement : MonoBehaviour {
         }
         if(other.tag == "Wall")
         {
-            transform.position += new Vector3(0, 0, -1);
+            transform.position += new Vector3(0, 0, -1) * Time.deltaTime;
         }
 
-        //if(other.tag)
+        if(other.tag == "Track")
+        {
+            transform.position += new Vector3(0, 1, 0) * Time.deltaTime;
+        }
     }
 
     void SpawnBullet()
