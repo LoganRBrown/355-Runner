@@ -29,9 +29,14 @@ public class Bullet : MonoBehaviour
 
     void OverlappingAABB(AABB other)
     {
-        if (other.tag == "Wall")
+        if (other.tag == "Player")
         {
-            Destroy(other.gameObject);
+            PlayerMovement player = other.GetComponent<PlayerMovement>();
+
+            if (player.isPlayerTwo) player.playerTwoHealth--;
+            else player.playerOneHealth--;
+
+            isDead = true;
         }
     }
 }

@@ -15,7 +15,7 @@ public class SceneController : MonoBehaviour {
     List<Track> tracks = new List<Track>();
     //public [] prefabTracks For using different track prefabs
 
-    public bool playerIsDead = false;
+    [HideInInspector] public bool playerIsDead = false;
 
     [HideInInspector] public int score = 0;
 
@@ -42,11 +42,6 @@ public class SceneController : MonoBehaviour {
 
         if (tracks.Count < 10) SpawnTrack();
 
-       if(prefabPlayerOne.transform.position.z <= -5)
-        {
-            playerIsDead = true;
-        }
-
         CheckGameOver();
     }
 
@@ -70,7 +65,11 @@ public class SceneController : MonoBehaviour {
 
     void CheckGameOver()
     {
-        if (playerIsDead)
+        PlayerMovement playerOne = prefabPlayerOne.GetComponent<PlayerMovement>();
+
+        PlayerMovement playerTwo = prefabPlayerTwo.GetComponent<PlayerMovement>();
+
+        if (playerOne.playerOneIsDead || playerTwo.playerTwoIsDead)
         {
             
             for(int i = tracks.Count - 1; i>=0; i--)
@@ -80,6 +79,8 @@ public class SceneController : MonoBehaviour {
             }
 
             Destroy(prefabPlayerOne.gameObject);
+
+            Destroy(prefabPlayerTwo.gameObject);
 
             //Should force the game to stop Here.
         }

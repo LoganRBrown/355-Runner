@@ -19,7 +19,9 @@ public class PlayerMovement : MonoBehaviour {
     List<Bullet> playerOneBullets = new List<Bullet>();
     List<Bullet> playerTwoBullets = new List<Bullet>();
 
-    [HideInInspector] public bool isDead = false;
+    [HideInInspector] public bool playerOneIsDead = false;
+
+    [HideInInspector] public bool playerTwoIsDead = false;
 
     Vector3 velocity = new Vector3(0, 0, 0);
 
@@ -27,13 +29,15 @@ public class PlayerMovement : MonoBehaviour {
 
     public float laneWidth = 2;
 
-    int lane = 0;
+    int playerOneLane = 0;
+
+    int playerTwoLane = 0;
 
     public GameObject otherPlayer;
 
-    int playerOneHealth = 10;
+    public int playerOneHealth = 10;
 
-    int playerTwoHealth = 10;
+    public int playerTwoHealth = 10;
 
     bool oneHasSwap = false;
 
@@ -93,13 +97,6 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
 
-        float targetX = lane * laneWidth;
-
-        float x = (targetX - transform.position.x) * .1f;
-        transform.position += new Vector3(x, 0, 0);
-
-        if (transform.position.z <= -5) isDead = true;
-
         CheckDeath();
 	}
 
@@ -112,16 +109,21 @@ public class PlayerMovement : MonoBehaviour {
             {
                 if (h == -1) // if pressing left
                 {
-                    lane--;
+                    playerOneLane--;
                 }
                 else if (h == 1) // if pressing right
                 {
-                    lane++;
+                    playerOneLane++;
                 }
 
             }
 
-            if(Input.GetButtonDown("Jump P1"))
+            float targetX = playerOneLane * laneWidth;
+
+            float x = (targetX - transform.position.x) * .1f;
+            transform.position += new Vector3(x, 0, 0);
+
+            if (Input.GetButtonDown("Jump P1"))
             {
                 if(transform.position.y <= 0)
                 {
@@ -180,14 +182,19 @@ public class PlayerMovement : MonoBehaviour {
             {
                 if (h == -1) // if pressing left
                 {
-                    lane--;
+                    playerTwoLane--;
                 }
                 else if (h == 1) // if pressing right
                 {
-                    lane++;
+                    playerTwoLane++;
                 }
 
             }
+
+            float targetX = playerTwoLane * laneWidth;
+
+            float x = (targetX - transform.position.x) * .1f;
+            transform.position += new Vector3(x, 0, 0);
 
             if (Input.GetButtonDown("Jump P2"))
             {
@@ -263,17 +270,14 @@ public class PlayerMovement : MonoBehaviour {
                     Debug.Log("something might be broken. Check PlayerMovement, Track, or PowerUp Scripts.");
                     break;
             }
+
             Destroy(other.gameObject);
         }
+
         if(other.tag == "Wall")
         {
             transform.position += new Vector3(0, 0, -1);
         }
-
-        //if(other.tag == "Track")
-        //{
-        //    transform.position = playerPos;
-        //}
 
         if (other.tag == "TrackWall" && transform.position.x > 0)
         {
@@ -307,7 +311,18 @@ public class PlayerMovement : MonoBehaviour {
 
     void CheckDeath()
     {
-        if (isDead)
+
+        if (transform.position.z <= -5)
+        {
+            if (!isPlayerTwo) playerOneIsDead = true;
+            else playerTwoIsDead = true;
+        }
+
+        if (playerOneHealth == 0) playerOneIsDead = true;
+
+        if (playerTwoHealth == 0) playerTwoIsDead = true;
+
+        if (playerOneIsDead || playerTwoIsDead)
         {
             for (int i = playerOneBullets.Count - 1; i >= 0; i--)
             {
