@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour {
 
-    public enum PowerUpType {Reverse, Push, Slide };
+    public enum PowerUpType {Swap, Push, Slide };
 
     public PowerUpType type;
 
@@ -16,7 +16,7 @@ public class PowerUp : MonoBehaviour {
 
         switch (type)
         {
-            case PowerUpType.Reverse:
+            case PowerUpType.Swap:
                 rend.material.shader = Shader.Find("_Color");
                 rend.material.SetColor("_Color", Color.green);
                 break;
