@@ -6,25 +6,50 @@ public class PlayerMovement : MonoBehaviour {
 
     const float GRAVITY = -10;
 
+    const float FIRSTLANE = 10;
+
+    const float SECONDLANE = 20;
+
+    public bool isPlayerTwo = false;
+
     Vector3 velocity = new Vector3(0, 0, 0);
 
     Vector3 playerPos = new Vector3(0, 0, 0);
 
     public Bullet prefabBullet;
-    List<Bullet> bullets = new List<Bullet>();
+    List<Bullet> playerOneBullets = new List<Bullet>();
+    List<Bullet> playerTwoBullets = new List<Bullet>();
 
     public float laneWidth = 2;
     int lane = 0;
 
-    public bool isDead = false;
+    [HideInInspector] public bool isDead = false;
+
+    bool hasSwap = false;
+
+    bool hasPush = false;
+
+    bool hasSlide = false;
+
+    public GameObject otherPlayer;
 
 	void Start () {
+        if (!isPlayerTwo)
+        {
+            otherPlayer = GameObject.Find("PlayerTwo");
+        }
+        else
+        {
+            otherPlayer = GameObject.Find("PlayerOne");
+        }
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        print(transform.position.y);
+        //print(transform.position.y);
+        Controls();
+
         velocity += new Vector3(0, GRAVITY, 0) * Time.deltaTime;
 
         transform.position += velocity * Time.deltaTime;
@@ -36,31 +61,21 @@ public class PlayerMovement : MonoBehaviour {
             transform.position = playerPos;
         }
 
-        float h = Input.GetAxisRaw("Horizontal");
-        if (Input.GetButtonDown("Horizontal"))
+        for (int i = playerOneBullets.Count - 1; i >= 0; i--)
         {
-            if (h == -1) // if pressing left
+            if (playerOneBullets[i].isDead)
             {
-                lane--;
+                Destroy(playerOneBullets[i].gameObject);
+                playerOneBullets.RemoveAt(i);
             }
-            else if (h == 1) // if pressing right
-            {
-                lane++;
-            }
-            
         }
 
-        if (Input.GetButtonDown("Jump"))
+        for (int j = playerTwoBullets.Count - 1; j >= 0; j--)
         {
-            SpawnBullet();
-        }
-
-        for(int i = bullets.Count - 1; i >= 0; i--)
-        {
-            if (bullets[i].isDead)
+            if (playerTwoBullets[j].isDead)
             {
-                Destroy(bullets[i].gameObject);
-                bullets.RemoveAt(i);
+                Destroy(playerTwoBullets[j].gameObject);
+                playerTwoBullets.RemoveAt(j);
             }
         }
 
@@ -74,17 +89,122 @@ public class PlayerMovement : MonoBehaviour {
         CheckDeath();
 	}
 
+    void Controls()
+    {
+        if (!isPlayerTwo)
+        {
+            float h = Input.GetAxisRaw("Horizontal P1");
+            if (Input.GetButtonDown("Horizontal P1"))
+            {
+                if (h == -1) // if pressing left
+                {
+                    lane--;
+                }
+                else if (h == 1) // if pressing right
+                {
+                    lane++;
+                }
+
+            }
+
+            if(Input.GetButtonDown("Jump P1"))
+            {
+                if(transform.position.y <= 0)
+                {
+                    velocity.y = 7;
+                }
+            }
+
+            if (Input.GetButtonDown("Bullets P1"))
+            {
+                SpawnBullet();
+            }
+
+            if (Input.GetButtonDown("Swap P1"))
+            {
+
+            }
+
+            if (Input.GetButtonDown("Push P1"))
+            {
+
+            }
+
+            if (Input.GetButtonDown("Slide P1"))
+            {
+
+            }
+        }
+
+        else
+        {
+            float h = Input.GetAxisRaw("Horizontal P2");
+            if (Input.GetButtonDown("Horizontal P2"))
+            {
+                if (h == -1) // if pressing left
+                {
+                    lane--;
+                }
+                else if (h == 1) // if pressing right
+                {
+                    lane++;
+                }
+
+            }
+
+            if (Input.GetButtonDown("Jump P2"))
+            {
+                if (transform.position.y <= 0)
+                {
+                    velocity.y = 7;
+                }
+            }
+
+            if (Input.GetButtonDown("Bullets P2"))
+            {
+                SpawnBullet();
+            }
+
+            if (Input.GetButtonDown("Swap P2"))
+            {
+
+            }
+
+            if (Input.GetButtonDown("Push P2"))
+            {
+
+            }
+
+            if (Input.GetButtonDown("Slide P2"))
+            {
+
+            }
+        }
+
+
+    }
+
     void OverlappingAABB(AABB other)
     {
-        if(other.tag == "Powerup")
+        if(other.tag == "PowerUp")
         {
             //must be a powerup
-            //Powerup powerup = other.GetComponent<Powerup>();
-            //switch (powerup.type) //use an enum
-            //{
-            //    case
-            //        break;
-            //}
+            PowerUp powerup = other.GetComponent<PowerUp>();
+            switch (powerup.type) //use an enum
+            {
+                case PowerUp.PowerUpType.Swap:
+                    hasSwap = true;
+                    break;
+                case PowerUp.PowerUpType.Push:
+                    hasPush = true;
+                    break;
+                case PowerUp.PowerUpType.Slide:
+                    hasSlide = true;
+                    break;
+                default:
+                    Debug.Log("something might be broken. Check PlayerMovement, Track, or PowerUp Scripts.");
+                    break;
+            }
             Destroy(other.gameObject);
         }
         if(other.tag == "Wall")
@@ -112,19 +232,35 @@ public class PlayerMovement : MonoBehaviour {
     {
         Vector3 pos = (transform.position);
 
-        Bullet newBullet = Instantiate(prefabBullet, pos, Quaternion.identity);
-        newBullet.transform.Rotate(90, 0, 0);
-        bullets.Add(newBullet);
+        if (!isPlayerTwo)
+        {
+            Bullet newBullet = Instantiate(prefabBullet, pos, Quaternion.identity);
+            newBullet.transform.Rotate(90, 0, 0);
+            playerOneBullets.Add(newBullet);
+        }
+
+        else
+        {
+            Bullet newBullet = Instantiate(prefabBullet, pos, Quaternion.identity);
+            newBullet.transform.Rotate(90, 0, 0);
+            playerTwoBullets.Add(newBullet);
+        }
     }
 
     void CheckDeath()
     {
         if (isDead)
         {
-            for (int i = bullets.Count - 1; i >= 0; i--)
+            for (int i = playerOneBullets.Count - 1; i >= 0; i--)
             {
-                    Destroy(bullets[i].gameObject);
-                    bullets.RemoveAt(i); 
+                    Destroy(playerOneBullets[i].gameObject);
+                playerOneBullets.RemoveAt(i); 
+            }
+
+            for (int j = playerTwoBullets.Count - 1; j >= 0; j--)
+            {
+                Destroy(playerTwoBullets[j].gameObject);
+                playerTwoBullets.RemoveAt(j);
             }
         }
     }

@@ -15,6 +15,8 @@ public class Track : MonoBehaviour {
 
     public GameObject prefabWall;
 
+    public PowerUp prefabPowerUp;
+
     void Start()
     {
         if (wallSpawnPoints.Length == 0) return;
@@ -24,6 +26,9 @@ public class Track : MonoBehaviour {
         Vector3 spawnPos = wallSpawnPoints[Random.Range(0, wallSpawnPoints.Length)].position;
         //spawn a wall, parent it to this piece of track:
         Instantiate(prefabWall, spawnPos, Quaternion.identity, transform);
+
+        Vector3 powerUpSpawn = wallSpawnPoints[Random.Range(0, wallSpawnPoints.Length)].position;
+        Instantiate(prefabPowerUp, powerUpSpawn, Quaternion.identity, transform);
     }
 
     void Update()

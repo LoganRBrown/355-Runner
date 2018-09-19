@@ -5,10 +5,12 @@ using UnityEngine;
 public class SceneController : MonoBehaviour {
 
     public GameObject prefabWall;
-    public GameObject prefabPlayer;
+    public GameObject prefabPlayerOne;
+    public GameObject prefabPlayerTwo;
     public Track prefabTrack;
     //float delayUntilSpawn = 0;
-    Vector3 playerPos = new Vector3(0, 20, 0);
+    Vector3 playerOnePos = new Vector3(-5, 10, 0);
+    Vector3 playerTwoPos = new Vector3(5, 10, 0);
 
     List<Track> tracks = new List<Track>();
     //public [] prefabTracks For using different track prefabs
@@ -18,7 +20,9 @@ public class SceneController : MonoBehaviour {
     [HideInInspector] public int score = 0;
 
 	void Start () {
-        Instantiate(prefabPlayer, playerPos, Quaternion.identity);
+        Instantiate(prefabPlayerOne, playerOnePos, Quaternion.identity);
+
+        Instantiate(prefabPlayerTwo, playerTwoPos, Quaternion.identity);
 
         SpawnTrack();
 
@@ -38,7 +42,7 @@ public class SceneController : MonoBehaviour {
 
         if (tracks.Count < 10) SpawnTrack();
 
-       if(prefabPlayer.transform.position.z <= -5)
+       if(prefabPlayerOne.transform.position.z <= -5)
         {
             playerIsDead = true;
         }
@@ -75,7 +79,7 @@ public class SceneController : MonoBehaviour {
                 tracks.RemoveAt(i);
             }
 
-            Destroy(prefabPlayer.gameObject);
+            Destroy(prefabPlayerOne.gameObject);
 
             //Should force the game to stop Here.
         }
