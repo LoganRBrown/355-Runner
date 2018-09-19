@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour {
 
     const float GRAVITY = -10;
 
+    const float START = 0;
+
     const float FIRSTLANE = 10;
 
     const float SECONDLANE = 20;
@@ -120,19 +122,42 @@ public class PlayerMovement : MonoBehaviour {
                 SpawnBullet();
             }
 
-            if (Input.GetButtonDown("Swap P1"))
+            if (Input.GetButtonDown("Swap P1") && hasSwap)
             {
+                Vector3 otherPos = otherPlayer.transform.position;
+                Vector3 thisPos = transform.position;
 
+                otherPlayer.transform.position = thisPos;
+
+                transform.position = otherPos;
             }
 
-            if (Input.GetButtonDown("Push P1"))
+            if (Input.GetButtonDown("Push P1") && hasPush)
             {
+                if (otherPlayer.transform.position.z == START)
+                {
+                    otherPlayer.transform.position = new Vector3(0, 0, FIRSTLANE);
+                }
 
+                else if (otherPlayer.transform.position.z == FIRSTLANE)
+                {
+                    otherPlayer.transform.position = new Vector3(0, 0, SECONDLANE);
+                }
+                else Debug.Log("Reached Maximum Lane");
             }
 
-            if (Input.GetButtonDown("Slide P1"))
+            if (Input.GetButtonDown("Slide P1") && hasSlide)
             {
+                if (transform.position.z == SECONDLANE)
+                {
+                    transform.position = new Vector3(0, 0, FIRSTLANE);
+                }
 
+                else if (transform.position.z == FIRSTLANE)
+                {
+                    transform.position = new Vector3(0, 0, START);
+                }
+                else Debug.Log("player reached start");
             }
         }
 
