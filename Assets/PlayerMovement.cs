@@ -14,26 +14,38 @@ public class PlayerMovement : MonoBehaviour {
 
     public bool isPlayerTwo = false;
 
+    public Bullet prefabBullet;
+
+    List<Bullet> playerOneBullets = new List<Bullet>();
+    List<Bullet> playerTwoBullets = new List<Bullet>();
+
+    [HideInInspector] public bool isDead = false;
+
     Vector3 velocity = new Vector3(0, 0, 0);
 
     Vector3 playerPos = new Vector3(0, 0, 0);
 
-    public Bullet prefabBullet;
-    List<Bullet> playerOneBullets = new List<Bullet>();
-    List<Bullet> playerTwoBullets = new List<Bullet>();
-
     public float laneWidth = 2;
+
     int lane = 0;
 
-    [HideInInspector] public bool isDead = false;
-
-    bool hasSwap = false;
-
-    bool hasPush = false;
-
-    bool hasSlide = false;
-
     public GameObject otherPlayer;
+
+    int playerOneHealth = 10;
+
+    int playerTwoHealth = 10;
+
+    bool oneHasSwap = false;
+
+    bool oneHasPush = false;
+
+    bool oneHasSlide = false;
+
+    bool twoHasSwap = false;
+
+    bool twoHasPush = false;
+
+    bool twoHasSlide = false;
 
 	void Start () {
         if (!isPlayerTwo)
@@ -122,7 +134,7 @@ public class PlayerMovement : MonoBehaviour {
                 SpawnBullet();
             }
 
-            if (Input.GetButtonDown("Swap P1") && hasSwap)
+            if (Input.GetButtonDown("Swap P1") && oneHasSwap)
             {
                 Vector3 otherPos = otherPlayer.transform.position;
                 Vector3 thisPos = transform.position;
@@ -132,7 +144,7 @@ public class PlayerMovement : MonoBehaviour {
                 transform.position = otherPos;
             }
 
-            if (Input.GetButtonDown("Push P1") && hasPush)
+            if (Input.GetButtonDown("Push P1") && oneHasPush)
             {
                 if (otherPlayer.transform.position.z == START)
                 {
@@ -146,7 +158,7 @@ public class PlayerMovement : MonoBehaviour {
                 else Debug.Log("Reached Maximum Lane");
             }
 
-            if (Input.GetButtonDown("Slide P1") && hasSlide)
+            if (Input.GetButtonDown("Slide P1") && oneHasSlide)
             {
                 if (transform.position.z == SECONDLANE)
                 {
@@ -185,24 +197,42 @@ public class PlayerMovement : MonoBehaviour {
                 }
             }
 
-            if (Input.GetButtonDown("Bullets P2"))
+            if (Input.GetButtonDown("Swap P2") && twoHasSwap)
             {
-                SpawnBullet();
+                Vector3 otherPos = otherPlayer.transform.position;
+                Vector3 thisPos = transform.position;
+
+                otherPlayer.transform.position = thisPos;
+
+                transform.position = otherPos;
             }
 
-            if (Input.GetButtonDown("Swap P2"))
+            if (Input.GetButtonDown("Push P2") && twoHasPush)
             {
+                if (otherPlayer.transform.position.z == START)
+                {
+                    otherPlayer.transform.position = new Vector3(0, 0, FIRSTLANE);
+                }
 
+                else if (otherPlayer.transform.position.z == FIRSTLANE)
+                {
+                    otherPlayer.transform.position = new Vector3(0, 0, SECONDLANE);
+                }
+                else Debug.Log("Reached Maximum Lane");
             }
 
-            if (Input.GetButtonDown("Push P2"))
+            if (Input.GetButtonDown("Slide P2") && twoHasSlide)
             {
+                if (transform.position.z == SECONDLANE)
+                {
+                    transform.position = new Vector3(0, 0, FIRSTLANE);
+                }
 
-            }
-
-            if (Input.GetButtonDown("Slide P2"))
-            {
-
+                else if (transform.position.z == FIRSTLANE)
+                {
+                    transform.position = new Vector3(0, 0, START);
+                }
+                else Debug.Log("player reached start");
             }
         }
 
@@ -218,13 +248,16 @@ public class PlayerMovement : MonoBehaviour {
             switch (powerup.type) //use an enum
             {
                 case PowerUp.PowerUpType.Swap:
-                    hasSwap = true;
+                    if (!isPlayerTwo) oneHasSwap = true;
+                    else twoHasSwap = true;
                     break;
                 case PowerUp.PowerUpType.Push:
-                    hasPush = true;
+                    if (!isPlayerTwo) oneHasPush = true;
+                    else twoHasPush = true;
                     break;
                 case PowerUp.PowerUpType.Slide:
-                    hasSlide = true;
+                    if (!isPlayerTwo) oneHasSlide = true;
+                    else twoHasSlide = true;
                     break;
                 default:
                     Debug.Log("something might be broken. Check PlayerMovement, Track, or PowerUp Scripts.");
