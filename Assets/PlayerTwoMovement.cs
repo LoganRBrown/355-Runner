@@ -201,7 +201,7 @@ public class PlayerTwoMovement : MonoBehaviour
     {
         Vector3 pos = (transform.position);
 
-        if (!isPlayerTwo)
+        if (isPlayerTwo)
         {
             Bullet newBullet = Instantiate(prefabBullet, pos, Quaternion.identity);
             newBullet.transform.Rotate(90, 0, 0);
@@ -212,14 +212,12 @@ public class PlayerTwoMovement : MonoBehaviour
     void CheckDeath()
     {
 
-        PlayerTwoMovement playerTwo = otherPlayer.GetComponent<PlayerTwoMovement>();
-
         if (transform.position.z <= -5)
         {
            playerTwoIsDead = true;
         }
 
-        if (playerTwo.playerHealth == 0)
+        if (playerHealth == 0)
         {
             playerTwoIsDead = true;
             print("Player 1 wins");

@@ -213,7 +213,7 @@ public class PlayerMovement : MonoBehaviour {
         if (transform.position.z <= -5)
         {
             if (!isPlayerTwo) playerOneIsDead = true;
-            else playerTwoIsDead = true;
+            else playerTwo.playerTwoIsDead = true;
         }
 
         if (playerHealth == 0)
@@ -224,11 +224,11 @@ public class PlayerMovement : MonoBehaviour {
 
         if ( playerTwo.playerHealth == 0)
         {
-            playerTwoIsDead = true;
+            playerTwo.playerTwoIsDead = true;
             print("Player 1 wins");
         }
 
-        if (playerOneIsDead || playerTwoIsDead)
+        if (playerOneIsDead || playerTwo.playerTwoIsDead)
         {
             for (int i = playerOneBullets.Count - 1; i >= 0; i--)
             {

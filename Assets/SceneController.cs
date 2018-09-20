@@ -33,19 +33,6 @@ public class SceneController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //int ps4 = 0;
-
-        //string[] names = Input.GetJoystickNames();
-        //for (int x =0; x < names.Length; x++)
-        //{
-        //    Debug.Log(names[x].Length);
-        //    if(names[x].Length == 19)
-        //    {
-        //        Debug.Log("PS4 connected");
-        //        ps4 = 1;
-        //    }
-        //}
-
         for(int i = tracks.Count - 1; i >=0; i--)
         {
             if (tracks[i].isDead)
@@ -68,8 +55,6 @@ public class SceneController : MonoBehaviour {
         {
             Vector3 ptOut = new Vector3(0, -.5f, -10);
             if(tracks.Count > 0)ptOut = tracks[tracks.Count - 1].pointOut.position;
-
-            //Track prefab = prefabTrack[Random.Range(0, prefabTrack.Length)]; Spawning random dofferent prefab tracks
 
             Vector3 ptIn = prefabTrack.pointIn.position;
 
@@ -99,7 +84,7 @@ public class SceneController : MonoBehaviour {
 
             Destroy(prefabPlayerTwo.gameObject);
 
-            //Should force the game to stop Here.
+            Application.Quit();
         }
     }
 }

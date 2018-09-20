@@ -26,9 +26,8 @@ public class Bullet : MonoBehaviour
             isDead = true;
         }
 
-        PlayerMovement playerOne = GetComponent<PlayerMovement>();
-        PlayerTwoMovement playerTwo = GetComponent<PlayerTwoMovement>();
-
+        PlayerMovement playerOne = GameObject.FindGameObjectWithTag("PlayerOne").GetComponent<PlayerMovement>();
+        PlayerTwoMovement playerTwo = GameObject.FindGameObjectWithTag("PlayerTwo").GetComponent<PlayerTwoMovement>();
 
         if (playerOne.playerOneIsDead || playerTwo.playerTwoIsDead)
         {
@@ -43,8 +42,8 @@ public class Bullet : MonoBehaviour
             PlayerMovement player = other.GetComponent<PlayerMovement>();
             PlayerTwoMovement playerTwo = other.GetComponent<PlayerTwoMovement>();
 
-            if (playerTwo.isPlayerTwo) playerTwo.playerTwoHealth--;
-            else player.playerOneHealth--;
+            if (playerTwo.isPlayerTwo) playerTwo.playerHealth--;
+            else player.playerHealth--;
 
             isDead = true;
         }
