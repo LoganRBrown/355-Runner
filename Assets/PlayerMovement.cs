@@ -20,13 +20,9 @@ public class PlayerMovement : MonoBehaviour {
 
     [HideInInspector] public bool playerOneIsDead = false;
 
-    [HideInInspector] public bool playerTwoIsDead = false;
-
     Vector3 velocity = new Vector3(0, 0, 0);
 
     Vector3 playerPos = new Vector3(0, 0, 0);
-
-    Vector3 playerTwoPos = new Vector3(0, 0, 0);
 
     public float laneWidth = 2;
 
