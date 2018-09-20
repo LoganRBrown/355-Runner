@@ -30,13 +30,14 @@ public class Bullet : MonoBehaviour
 
     void OverlappingAABB(AABB other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "PlayerOne" || other.tag == "PlayerTwo")
         {
-            PlayerMovement player = other.GetComponent<PlayerMovement>();
-            PlayerTwoMovement playerTwo = other.GetComponent<PlayerTwoMovement>();
+            PlayerMovement playerOne = GameObject.FindGameObjectWithTag("PlayerOne").GetComponent<PlayerMovement>();
+            PlayerTwoMovement playerTwo = GameObject.FindGameObjectWithTag("PlayerTwo").GetComponent<PlayerTwoMovement>();
 
             if (playerTwo.isPlayerTwo) playerTwo.playerHealth--;
-            else player.playerHealth--;
+            
+            else playerOne.playerHealth--;
 
             isDead = true;
         }

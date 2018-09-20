@@ -203,7 +203,7 @@ MonoBehaviour:
     type: 2}
   playerIsDead: 0
   score: 0
-  powerUpTimer: 5
+  powerUpTimer: 2
 --- !u!114 &1144775743
 MonoBehaviour:
   m_ObjectHideFlags: 0

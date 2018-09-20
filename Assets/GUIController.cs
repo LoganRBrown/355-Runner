@@ -16,6 +16,6 @@ public class GUIController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        scoreText.text = "Score: " + scene.score;
+        //scoreText.text = "Score: " + scene.score;
 	}
 }

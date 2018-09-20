@@ -12,19 +12,17 @@ public class SceneController : MonoBehaviour {
     Vector3 playerOnePos = new Vector3(-7, 10, 0);
     Vector3 playerTwoPos = new Vector3(7, 10, 0);
 
+    GameObject playOne;
+    GameObject playTwo;
+
     List<Track> tracks = new List<Track>();
-    //public [] prefabTracks For using different track prefabs
-
-    [HideInInspector] public bool playerIsDead = false;
-
-    [HideInInspector] public int score = 0;
 
     public float powerUpTimer = 2;
 
 	void Start () {
-        Instantiate(prefabPlayerOne, playerOnePos, Quaternion.identity);
+        playOne = Instantiate(prefabPlayerOne, playerOnePos, Quaternion.identity);
 
-        Instantiate(prefabPlayerTwo, playerTwoPos, Quaternion.identity);
+        playTwo = Instantiate(prefabPlayerTwo, playerTwoPos, Quaternion.identity);
 
         SpawnTrack();
 
@@ -67,22 +65,22 @@ public class SceneController : MonoBehaviour {
 
     void CheckGameOver()
     {
-        PlayerMovement playerOne = prefabPlayerOne.GetComponent<PlayerMovement>();
+        PlayerMovement playerOne = GameObject.FindGameObjectWithTag("PlayerOne").GetComponent<PlayerMovement>();
 
-        PlayerTwoMovement playerTwo = prefabPlayerTwo.GetComponent<PlayerTwoMovement>();
+        PlayerTwoMovement playerTwo = GameObject.FindGameObjectWithTag("PlayerTwo").GetComponent<PlayerTwoMovement>();
 
         if (playerOne.playerOneIsDead || playerTwo.playerTwoIsDead)
         {
-            
-            for(int i = tracks.Count - 1; i>=0; i--)
+
+            for (int i = tracks.Count - 1; i>=0; i--)
             {
                 Destroy(tracks[i].gameObject);
                 tracks.RemoveAt(i);
             }
 
-            Destroy(prefabPlayerOne.gameObject);
+            Destroy(playOne.gameObject);
 
-            Destroy(prefabPlayerTwo.gameObject);
+            Destroy(playTwo.gameObject);
 
             Application.Quit();
         }

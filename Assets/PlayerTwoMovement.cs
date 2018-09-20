@@ -198,6 +198,7 @@ public class PlayerTwoMovement : MonoBehaviour
     void SpawnBullet()
     {
         Vector3 pos = (transform.position);
+        pos += new Vector3(0, 0, 2);
 
         if (isPlayerTwo)
         {
@@ -210,15 +211,9 @@ public class PlayerTwoMovement : MonoBehaviour
     void CheckDeath()
     {
 
-        if (transform.position.z <= -5)
+        if (transform.position.z <= -10)
         {
            playerTwoIsDead = true;
-        }
-
-        if (playerHealth == 0)
-        {
-            playerTwoIsDead = true;
-            print("Player 1 wins");
         }
 
         if (playerTwoIsDead)

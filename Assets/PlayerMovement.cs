@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour {
 
     const float SECONDLANE = 20;
 
-    public bool isPlayerTwo = false;
+    [HideInInspector] public bool isPlayerTwo = false;
 
     public Bullet prefabBullet;
 
@@ -194,6 +194,7 @@ public class PlayerMovement : MonoBehaviour {
     void SpawnBullet()
     {
         Vector3 pos = (transform.position);
+        pos += new Vector3(0, 0, 2);
 
         if (!isPlayerTwo)
         {
@@ -208,7 +209,7 @@ public class PlayerMovement : MonoBehaviour {
 
         PlayerTwoMovement playerTwo = otherPlayer.GetComponent<PlayerTwoMovement>();
 
-        if (transform.position.z <= -5)
+        if (transform.position.z <= -10)
         {
             if (!isPlayerTwo) playerOneIsDead = true;
             else playerTwo.playerTwoIsDead = true;
@@ -216,21 +217,22 @@ public class PlayerMovement : MonoBehaviour {
 
         if (playerHealth == 0)
         {
-            playerOneIsDead = true;
-            print("Player 2 wins");
+            playerOneIsDead = true; 
         }
 
         if ( playerTwo.playerHealth == 0)
         {
             playerTwo.playerTwoIsDead = true;
-            print("Player 1 wins");
         }
+
+        if (playerOneIsDead) print("Player 2 wins");
+        if (playerTwo.playerTwoIsDead) print("Player 1 wins");
 
         if (playerOneIsDead || playerTwo.playerTwoIsDead)
         {
             for (int i = playerOneBullets.Count - 1; i >= 0; i--)
             {
-                    Destroy(playerOneBullets[i].gameObject);
+                Destroy(playerOneBullets[i].gameObject);
                 playerOneBullets.RemoveAt(i); 
             }
         }
