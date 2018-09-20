@@ -19,7 +19,7 @@ public class SceneController : MonoBehaviour {
 
     [HideInInspector] public int score = 0;
 
-    public float powerUpTimer = 3;
+    public float powerUpTimer = 2;
 
 	void Start () {
         Instantiate(prefabPlayerOne, playerOnePos, Quaternion.identity);

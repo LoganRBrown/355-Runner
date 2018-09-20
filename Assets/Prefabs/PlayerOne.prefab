@@ -33,6 +33,10 @@ Prefab:
       propertyPath: m_TagString
       value: PlayerOne
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d636b35ab52919440a01d68b3d10575b, type: 2}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 0}
@@ -83,7 +87,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d636b35ab52919440a01d68b3d10575b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -136,9 +140,6 @@ MonoBehaviour:
   prefabBullet: {fileID: 114478367185270532, guid: 2f4e5d38efc541c439f0c1deba0f46df,
     type: 2}
   playerOneIsDead: 0
-  playerTwoIsDead: 0
-  laneWidth: 4
   otherPlayer: {fileID: 1692511701663146, guid: 8c21580fd563aa440b741749a1e8893c,
     type: 2}
-  playerOneHealth: 10
-  playerTwoHealth: 10
+  playerHealth: 10

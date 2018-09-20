@@ -56,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ba0d0b91523f83f4cb50e3f03e6a5443, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,13 +96,10 @@ MonoBehaviour:
   isPlayerTwo: 1
   prefabBullet: {fileID: 114478367185270532, guid: 2f4e5d38efc541c439f0c1deba0f46df,
     type: 2}
-  playerOneIsDead: 0
   playerTwoIsDead: 0
-  laneWidth: 4
   otherPlayer: {fileID: 1444896789905836, guid: fc3e82ff392d799408476db6e0dbac9e,
     type: 2}
-  playerOneHealth: 10
-  playerTwoHealth: 10
+  playerHealth: 10
 --- !u!114 &114343090800301112
 MonoBehaviour:
   m_ObjectHideFlags: 1

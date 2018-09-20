@@ -24,8 +24,6 @@ public class PlayerMovement : MonoBehaviour {
 
     Vector3 playerPos = new Vector3(0, 0, 0);
 
-    public float laneWidth = 2;
-
     public GameObject otherPlayer;
 
     public int playerHealth = 10;
