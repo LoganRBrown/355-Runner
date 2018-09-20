@@ -108,48 +108,6 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &616262663
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4721104047818000, guid: 3583a2a014d58d743ba62105b56655b7, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.41938972
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721104047818000, guid: 3583a2a014d58d743ba62105b56655b7, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.61506605
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721104047818000, guid: 3583a2a014d58d743ba62105b56655b7, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -1.796597
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721104047818000, guid: 3583a2a014d58d743ba62105b56655b7, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721104047818000, guid: 3583a2a014d58d743ba62105b56655b7, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721104047818000, guid: 3583a2a014d58d743ba62105b56655b7, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721104047818000, guid: 3583a2a014d58d743ba62105b56655b7, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4721104047818000, guid: 3583a2a014d58d743ba62105b56655b7, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 3583a2a014d58d743ba62105b56655b7, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1144775738
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,8 +195,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabWall: {fileID: 1002954541978992, guid: a5c0922f817251c4ba75d2b60ad9e2b0, type: 2}
-  prefabPlayerOne: {fileID: 0}
-  prefabPlayerTwo: {fileID: 0}
+  prefabPlayerOne: {fileID: 1444896789905836, guid: fc3e82ff392d799408476db6e0dbac9e,
+    type: 2}
+  prefabPlayerTwo: {fileID: 1692511701663146, guid: 8c21580fd563aa440b741749a1e8893c,
+    type: 2}
   prefabTrack: {fileID: 114045145692428016, guid: ab64496a7270bc64787d1965d8105953,
     type: 2}
   playerIsDead: 0

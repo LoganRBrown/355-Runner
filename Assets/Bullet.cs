@@ -32,10 +32,16 @@ public class Bullet : MonoBehaviour
         if (other.tag == "Player")
         {
             PlayerMovement player = other.GetComponent<PlayerMovement>();
+            PlayerTwoMovement playerTwo = other.GetComponent<PlayerTwoMovement>();
 
-            if (player.isPlayerTwo) player.playerTwoHealth--;
+            if (playerTwo.isPlayerTwo) playerTwo.playerTwoHealth--;
             else player.playerOneHealth--;
 
+            isDead = true;
+        }
+
+        if (other.tag == "Wall")
+        {
             isDead = true;
         }
     }

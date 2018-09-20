@@ -28,11 +28,15 @@ public class Track : MonoBehaviour {
         Instantiate(prefabWall, spawnPos, Quaternion.identity, transform);
 
         Vector3 powerUpSpawn = wallSpawnPoints[Random.Range(0, wallSpawnPoints.Length)].position;
-        Instantiate(prefabPowerUp, powerUpSpawn, Quaternion.identity, transform);
+        if(powerUpSpawn != spawnPos) Instantiate(prefabPowerUp, powerUpSpawn, Quaternion.identity, transform);
+
+        //Debug.Log(prefabPowerUp.type);
+        
     }
 
     void Update()
     {
+        prefabPowerUp.transform.localScale = new Vector3(1, 1, 1);
         transform.position += new Vector3(0, 0, -speed) * Time.deltaTime;
 
         if (pointOut.position.z < -20)

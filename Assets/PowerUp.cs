@@ -4,38 +4,38 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour {
 
-    public enum PowerUpType {Swap, Push, Slide };
+    [HideInInspector] public enum PowerUpType {Swap, Push, Slide };
 
     public PowerUpType type;
+
+    public Material[] material;
+
+    Renderer rend;
 
 	
 	void Start () {
         type = (PowerUpType)Random.Range(0, 3);
 
-        Renderer rend = GetComponent<Renderer>();
+        Debug.Log(type);
+
+        rend = GetComponent<Renderer>();
+        rend.enabled = true;
+        rend.sharedMaterial = material[0];
 
         switch (type)
         {
             case PowerUpType.Swap:
-                rend.material.shader = Shader.Find("_Color");
-                rend.material.SetColor("_Color", Color.green);
+                rend.sharedMaterial = material[1];
                 break;
             case PowerUpType.Push:
-                rend.material.shader = Shader.Find("_Color");
-                rend.material.SetColor("_Color", Color.blue);
+                rend.sharedMaterial = material[2];
                 break;
             case PowerUpType.Slide:
-                rend.material.shader = Shader.Find("_Color");
-                rend.material.SetColor("_Color", Color.red);
+                rend.sharedMaterial = material[3];
                 break;
             default:
                 Debug.Log("The Power Up Type enum Broke. Check the PowerUp Script");
                 break;
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 }

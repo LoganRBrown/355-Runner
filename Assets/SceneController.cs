@@ -9,8 +9,8 @@ public class SceneController : MonoBehaviour {
     public GameObject prefabPlayerTwo;
     public Track prefabTrack;
     //float delayUntilSpawn = 0;
-    Vector3 playerOnePos = new Vector3(-5, 10, 0);
-    Vector3 playerTwoPos = new Vector3(5, 10, 0);
+    Vector3 playerOnePos = new Vector3(-30, 10, 0);
+    Vector3 playerTwoPos = new Vector3(30, 10, 0);
 
     List<Track> tracks = new List<Track>();
     //public [] prefabTracks For using different track prefabs
@@ -67,7 +67,7 @@ public class SceneController : MonoBehaviour {
     {
         PlayerMovement playerOne = prefabPlayerOne.GetComponent<PlayerMovement>();
 
-        PlayerMovement playerTwo = prefabPlayerTwo.GetComponent<PlayerMovement>();
+        PlayerTwoMovement playerTwo = prefabPlayerTwo.GetComponent<PlayerTwoMovement>();
 
         if (playerOne.playerOneIsDead || playerTwo.playerTwoIsDead)
         {

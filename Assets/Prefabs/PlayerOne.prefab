@@ -24,6 +24,15 @@ Prefab:
       propertyPath: InitialModule.startLifetime.scalar
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: otherPlayer
+      value: 
+      objectReference: {fileID: 1692511701663146, guid: 8c21580fd563aa440b741749a1e8893c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_TagString
+      value: PlayerOne
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 0}
@@ -43,7 +52,7 @@ GameObject:
   - component: {fileID: 114148290460971352}
   m_Layer: 0
   m_Name: PlayerOne
-  m_TagString: Player
+  m_TagString: PlayerOne
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,5 +135,10 @@ MonoBehaviour:
   isPlayerTwo: 0
   prefabBullet: {fileID: 114478367185270532, guid: 2f4e5d38efc541c439f0c1deba0f46df,
     type: 2}
+  playerOneIsDead: 0
+  playerTwoIsDead: 0
   laneWidth: 4
-  isDead: 0
+  otherPlayer: {fileID: 1692511701663146, guid: 8c21580fd563aa440b741749a1e8893c,
+    type: 2}
+  playerOneHealth: 10
+  playerTwoHealth: 10

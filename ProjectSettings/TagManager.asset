@@ -9,6 +9,8 @@ TagManager:
   - Track
   - TrackWall
   - PowerUp
+  - PlayerOne
+  - PlayerTwo
   layers:
   - Default
   - TransparentFX

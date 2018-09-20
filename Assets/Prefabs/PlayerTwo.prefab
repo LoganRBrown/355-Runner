@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 33649224666049990}
   - component: {fileID: 23412277667284898}
   - component: {fileID: 114343090800301112}
-  - component: {fileID: 114932856127470106}
+  - component: {fileID: 114121141665889176}
   m_Layer: 0
   m_Name: PlayerTwo
-  m_TagString: Untagged
+  m_TagString: PlayerTwo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,6 +82,27 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1692511701663146}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114121141665889176
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1692511701663146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb04e9f17980bd247ac1202e133678ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayerTwo: 1
+  prefabBullet: {fileID: 114478367185270532, guid: 2f4e5d38efc541c439f0c1deba0f46df,
+    type: 2}
+  playerOneIsDead: 0
+  playerTwoIsDead: 0
+  laneWidth: 4
+  otherPlayer: {fileID: 1444896789905836, guid: fc3e82ff392d799408476db6e0dbac9e,
+    type: 2}
+  playerOneHealth: 10
+  playerTwoHealth: 10
 --- !u!114 &114343090800301112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,19 +115,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDoneChecking: 0
---- !u!114 &114932856127470106
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1692511701663146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 650290617bd40ce4288e0e682c0e7b37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayerTwo: 1
-  prefabBullet: {fileID: 114478367185270532, guid: 2f4e5d38efc541c439f0c1deba0f46df,
-    type: 2}
-  laneWidth: 4
-  isDead: 0

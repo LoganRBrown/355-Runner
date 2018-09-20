@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerTwoMovement : MonoBehaviour
+{
 
     const float GRAVITY = -10;
 
@@ -12,7 +13,7 @@ public class PlayerMovement : MonoBehaviour {
 
     const float SECONDLANE = 20;
 
-    public bool isPlayerTwo = false;
+    public bool isPlayerTwo = true;
 
     public Bullet prefabBullet;
 
@@ -53,14 +54,14 @@ public class PlayerMovement : MonoBehaviour {
 
     bool twoHasSlide = false;
 
-	void Start () {
+    void Start()
+    {
+        otherPlayer = GameObject.FindGameObjectWithTag("PlayerOne");
+    }
 
-        otherPlayer = GameObject.FindGameObjectWithTag("PlayerTwo");
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
         //print(transform.position.y);
         Controls();
 
@@ -103,7 +104,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         CheckDeath();
-	}
+    }
 
     void Controls()
     {
@@ -130,7 +131,7 @@ public class PlayerMovement : MonoBehaviour {
 
             if (Input.GetButtonDown("Jump P1"))
             {
-                if(transform.position.y <= 0)
+                if (transform.position.y <= 0)
                 {
                     velocity.y = 7;
                 }
@@ -253,7 +254,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void OverlappingAABB(AABB other)
     {
-        if(other.tag == "PowerUp")
+        if (other.tag == "PowerUp")
         {
             //must be a powerup
             PowerUp powerup = other.GetComponent<PowerUp>();
@@ -279,7 +280,7 @@ public class PlayerMovement : MonoBehaviour {
             Destroy(other.gameObject);
         }
 
-        if(other.tag == "Wall")
+        if (other.tag == "Wall")
         {
             transform.position += new Vector3(0, 0, -1);
         }
@@ -331,8 +332,8 @@ public class PlayerMovement : MonoBehaviour {
         {
             for (int i = playerOneBullets.Count - 1; i >= 0; i--)
             {
-                    Destroy(playerOneBullets[i].gameObject);
-                playerOneBullets.RemoveAt(i); 
+                Destroy(playerOneBullets[i].gameObject);
+                playerOneBullets.RemoveAt(i);
             }
 
             for (int j = playerTwoBullets.Count - 1; j >= 0; j--)
