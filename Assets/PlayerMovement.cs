@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour {
     public Bullet prefabBullet;
 
     List<Bullet> playerOneBullets = new List<Bullet>();
-    List<Bullet> playerTwoBullets = new List<Bullet>();
 
     [HideInInspector] public bool playerOneIsDead = false;
 
@@ -53,35 +52,31 @@ public class PlayerMovement : MonoBehaviour {
 
     bool twoHasSlide = false;
 
+    bool inAir = true;
+
 	void Start () {
 
         otherPlayer = GameObject.FindGameObjectWithTag("PlayerTwo");
+        if(otherPlayer != null)
+        {
+            Debug.Log("Found Player 2");
+        }
 		
 	}
 	
-	// Update is called once per frame
 	void Update () {
-        //print(transform.position.y);
         Controls();
 
         velocity += new Vector3(0, GRAVITY, 0) * Time.deltaTime;
 
         transform.position += velocity * Time.deltaTime;
 
-        otherPlayer.transform.position += velocity * Time.deltaTime;
-
-        if (transform.position.y < .5) // if on the ground:
+        if (transform.position.y < -.5) // if on the ground:
         {
             playerPos = transform.position; // copy the position
             playerPos.y = -.5f; // clamp y value
             transform.position = playerPos;
-        }
-
-        if (otherPlayer.transform.position.y < .5) // if on the ground:
-        {
-            playerTwoPos = otherPlayer.transform.position; // copy the position
-            playerTwoPos.y = -.5f; // clamp y value
-            otherPlayer.transform.position = playerTwoPos;
+            inAir = false;
         }
 
         for (int i = playerOneBullets.Count - 1; i >= 0; i--)
@@ -93,15 +88,6 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
 
-        for (int j = playerTwoBullets.Count - 1; j >= 0; j--)
-        {
-            if (playerTwoBullets[j].isDead)
-            {
-                Destroy(playerTwoBullets[j].gameObject);
-                playerTwoBullets.RemoveAt(j);
-            }
-        }
-
         CheckDeath();
 	}
 
@@ -109,30 +95,19 @@ public class PlayerMovement : MonoBehaviour {
     {
         if (!isPlayerTwo)
         {
-            float h = Input.GetAxisRaw("Horizontal P1");
-            if (Input.GetButtonDown("Horizontal P1"))
+            if (!inAir)
             {
-                if (h == -1) // if pressing left
-                {
-                    playerOneLane--;
-                }
-                else if (h == 1) // if pressing right
-                {
-                    playerOneLane++;
-                }
+                float x = Input.GetAxis("Horizontal P1");
 
+                transform.Translate(new Vector3(x / 3, 0, 0));
             }
-
-            float targetX = playerOneLane * laneWidth;
-
-            float x = (targetX - transform.position.x) * .1f;
-            transform.position += new Vector3(x, 0, 0);
 
             if (Input.GetButtonDown("Jump P1"))
             {
                 if(transform.position.y <= 0)
                 {
-                    velocity.y = 7;
+                    inAir = true;
+                    velocity.y = 8;
                 }
             }
 
@@ -143,16 +118,20 @@ public class PlayerMovement : MonoBehaviour {
 
             if (Input.GetButtonDown("Swap P1") && oneHasSwap)
             {
+                Debug.Log("P1 Swap");
                 Vector3 otherPos = otherPlayer.transform.position;
                 Vector3 thisPos = transform.position;
 
                 otherPlayer.transform.position = thisPos;
 
                 transform.position = otherPos;
+
+                oneHasSwap = false;
             }
 
             if (Input.GetButtonDown("Push P1") && oneHasPush)
             {
+                Debug.Log("P1 Push");
                 if (otherPlayer.transform.position.z == START)
                 {
                     otherPlayer.transform.position = new Vector3(0, 0, FIRSTLANE);
@@ -163,10 +142,13 @@ public class PlayerMovement : MonoBehaviour {
                     otherPlayer.transform.position = new Vector3(0, 0, SECONDLANE);
                 }
                 else Debug.Log("Reached Maximum Lane");
+
+                oneHasPush = false;
             }
 
             if (Input.GetButtonDown("Slide P1") && oneHasSlide)
             {
+                Debug.Log("P1 Slide");
                 if (transform.position.z == SECONDLANE)
                 {
                     transform.position = new Vector3(0, 0, FIRSTLANE);
@@ -176,7 +158,12 @@ public class PlayerMovement : MonoBehaviour {
                 {
                     transform.position = new Vector3(0, 0, START);
                 }
+                else if(transform.position.z <= START){
+                    transform.position = new Vector3(0, 0, START);
+                }
                 else Debug.Log("player reached start");
+
+                oneHasSlide = false;
             }
         }
 
@@ -305,13 +292,6 @@ public class PlayerMovement : MonoBehaviour {
             newBullet.transform.Rotate(90, 0, 0);
             playerOneBullets.Add(newBullet);
         }
-
-        else
-        {
-            Bullet newBullet = Instantiate(prefabBullet, pos, Quaternion.identity);
-            newBullet.transform.Rotate(90, 0, 0);
-            playerTwoBullets.Add(newBullet);
-        }
     }
 
     void CheckDeath()
@@ -323,9 +303,17 @@ public class PlayerMovement : MonoBehaviour {
             else playerTwoIsDead = true;
         }
 
-        if (playerOneHealth == 0) playerOneIsDead = true;
+        if (playerOneHealth == 0)
+        {
+            playerOneIsDead = true;
+            print("Player 2 wins");
+        }
 
-        if (playerTwoHealth == 0) playerTwoIsDead = true;
+        if (playerTwoHealth == 0)
+        {
+            playerTwoIsDead = true;
+            print("Player 1 wins");
+        }
 
         if (playerOneIsDead || playerTwoIsDead)
         {
@@ -333,12 +321,6 @@ public class PlayerMovement : MonoBehaviour {
             {
                     Destroy(playerOneBullets[i].gameObject);
                 playerOneBullets.RemoveAt(i); 
-            }
-
-            for (int j = playerTwoBullets.Count - 1; j >= 0; j--)
-            {
-                Destroy(playerTwoBullets[j].gameObject);
-                playerTwoBullets.RemoveAt(j);
             }
         }
     }

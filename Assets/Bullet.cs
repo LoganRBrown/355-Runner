@@ -21,9 +21,18 @@ public class Bullet : MonoBehaviour
     {
         transform.position += new Vector3(0, 0, speed) * Time.deltaTime;
 
-        if (transform.position.z >= 15)
+        if (transform.position.z >= 25)
         {
             isDead = true;
+        }
+
+        PlayerMovement playerOne = GetComponent<PlayerMovement>();
+        PlayerTwoMovement playerTwo = GetComponent<PlayerTwoMovement>();
+
+
+        if (playerOne.playerOneIsDead || playerTwo.playerTwoIsDead)
+        {
+            Destroy(gameObject);
         }
     }
 

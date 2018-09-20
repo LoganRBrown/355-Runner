@@ -39,7 +39,7 @@ public class Track : MonoBehaviour {
             if (powerUpSpawn != wallSpawnPos) Instantiate(prefabPowerUp, powerUpSpawn, Quaternion.identity, transform);
             prefabPowerUp.transform.localScale = new Vector3(.5f, 1.5f, .5f);
             prefabPowerUp.transform.position = new Vector3(0, .3f, 0);
-            control.powerUpTimer = 5;
+            control.powerUpTimer = 3;
         }
 
         //Debug.Log(prefabPowerUp.type);

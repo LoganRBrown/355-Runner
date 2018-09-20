@@ -9,8 +9,8 @@ public class SceneController : MonoBehaviour {
     public GameObject prefabPlayerTwo;
     public Track prefabTrack;
     //float delayUntilSpawn = 0;
-    Vector3 playerOnePos = new Vector3(-30, 10, 0);
-    Vector3 playerTwoPos = new Vector3(30, 10, 0);
+    Vector3 playerOnePos = new Vector3(-7, 10, 0);
+    Vector3 playerTwoPos = new Vector3(7, 10, 0);
 
     List<Track> tracks = new List<Track>();
     //public [] prefabTracks For using different track prefabs

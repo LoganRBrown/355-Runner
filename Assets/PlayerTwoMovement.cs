@@ -57,11 +57,14 @@ public class PlayerTwoMovement : MonoBehaviour
     void Start()
     {
         otherPlayer = GameObject.FindGameObjectWithTag("PlayerOne");
+
+        transform.position += new Vector3(0, 0, 10);
     }
 
     // Update is called once per frame
     void Update()
     {
+
         //print(transform.position.y);
         Controls();
 
@@ -69,20 +72,12 @@ public class PlayerTwoMovement : MonoBehaviour
 
         transform.position += velocity * Time.deltaTime;
 
-        otherPlayer.transform.position += velocity * Time.deltaTime;
 
         if (transform.position.y < .5) // if on the ground:
         {
             playerPos = transform.position; // copy the position
             playerPos.y = -.5f; // clamp y value
             transform.position = playerPos;
-        }
-
-        if (otherPlayer.transform.position.y < .5) // if on the ground:
-        {
-            playerTwoPos = otherPlayer.transform.position; // copy the position
-            playerTwoPos.y = -.5f; // clamp y value
-            otherPlayer.transform.position = playerTwoPos;
         }
 
         for (int i = playerOneBullets.Count - 1; i >= 0; i--)
@@ -252,49 +247,49 @@ public class PlayerTwoMovement : MonoBehaviour
 
     }
 
-    void OverlappingAABB(AABB other)
-    {
-        if (other.tag == "PowerUp")
-        {
-            //must be a powerup
-            PowerUp powerup = other.GetComponent<PowerUp>();
-            switch (powerup.type) //use an enum
-            {
-                case PowerUp.PowerUpType.Swap:
-                    if (!isPlayerTwo) oneHasSwap = true;
-                    else twoHasSwap = true;
-                    break;
-                case PowerUp.PowerUpType.Push:
-                    if (!isPlayerTwo) oneHasPush = true;
-                    else twoHasPush = true;
-                    break;
-                case PowerUp.PowerUpType.Slide:
-                    if (!isPlayerTwo) oneHasSlide = true;
-                    else twoHasSlide = true;
-                    break;
-                default:
-                    Debug.Log("something might be broken. Check PlayerMovement, Track, or PowerUp Scripts.");
-                    break;
-            }
+    //void OverlappingAABB(AABB other)
+    //{
+    //    if (other.tag == "PowerUp")
+    //    {
+    //        //must be a powerup
+    //        PowerUp powerup = other.GetComponent<PowerUp>();
+    //        switch (powerup.type) //use an enum
+    //        {
+    //            case PowerUp.PowerUpType.Swap:
+    //                if (!isPlayerTwo) oneHasSwap = true;
+    //                else twoHasSwap = true;
+    //                break;
+    //            case PowerUp.PowerUpType.Push:
+    //                if (!isPlayerTwo) oneHasPush = true;
+    //                else twoHasPush = true;
+    //                break;
+    //            case PowerUp.PowerUpType.Slide:
+    //                if (!isPlayerTwo) oneHasSlide = true;
+    //                else twoHasSlide = true;
+    //                break;
+    //            default:
+    //                Debug.Log("something might be broken. Check PlayerMovement, Track, or PowerUp Scripts.");
+    //                break;
+    //        }
 
-            Destroy(other.gameObject);
-        }
+    //        Destroy(other.gameObject);
+    //    }
 
-        if (other.tag == "Wall")
-        {
-            transform.position += new Vector3(0, 0, -1);
-        }
+    //    if (other.tag == "Wall")
+    //    {
+    //        transform.position += new Vector3(0, 0, -1);
+    //    }
 
-        if (other.tag == "TrackWall" && transform.position.x > 0)
-        {
-            transform.position += new Vector3(-1, 0, 0);
-        }
+    //    if (other.tag == "TrackWall" && transform.position.x > 0)
+    //    {
+    //        transform.position += new Vector3(-1, 0, 0);
+    //    }
 
-        if (other.tag == "TrackWall" && transform.position.x < 0)
-        {
-            transform.position += new Vector3(1, 0, 0);
-        }
-    }
+    //    if (other.tag == "TrackWall" && transform.position.x < 0)
+    //    {
+    //        transform.position += new Vector3(1, 0, 0);
+    //    }
+    //}
 
     void SpawnBullet()
     {
