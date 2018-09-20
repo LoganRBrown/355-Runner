@@ -94,6 +94,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  material:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2e17dc8f2a6130c4290c64241dce2ea4, type: 2}
+  - {fileID: 2100000, guid: 52f60d7878438b542a678a0022135a07, type: 2}
+  - {fileID: 2100000, guid: 13c0e24d005a8174f87d367d2cc553cd, type: 2}
 --- !u!114 &114986421025869004
 MonoBehaviour:
   m_ObjectHideFlags: 1

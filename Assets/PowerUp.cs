@@ -13,10 +13,8 @@ public class PowerUp : MonoBehaviour {
     Renderer rend;
 
 	
-	void Start () {
+	void Awake () {
         type = (PowerUpType)Random.Range(0, 3);
-
-        Debug.Log(type);
 
         rend = GetComponent<Renderer>();
         rend.enabled = true;

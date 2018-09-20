@@ -17,6 +17,8 @@ public class Track : MonoBehaviour {
 
     public PowerUp prefabPowerUp;
 
+    Vector3 wallSpawnPos = new Vector3(0,0,0);
+
     void Start()
     {
         if (wallSpawnPoints.Length == 0) return;
@@ -24,19 +26,29 @@ public class Track : MonoBehaviour {
 
         //Get a random Position
         Vector3 spawnPos = wallSpawnPoints[Random.Range(0, wallSpawnPoints.Length)].position;
+        wallSpawnPos = spawnPos;
         //spawn a wall, parent it to this piece of track:
         Instantiate(prefabWall, spawnPos, Quaternion.identity, transform);
 
-        Vector3 powerUpSpawn = wallSpawnPoints[Random.Range(0, wallSpawnPoints.Length)].position;
-        if(powerUpSpawn != spawnPos) Instantiate(prefabPowerUp, powerUpSpawn, Quaternion.identity, transform);
+        GameObject cam = GameObject.Find("Main Camera");
+        SceneController control = cam.GetComponent<SceneController>();
+
+        if (control.powerUpTimer <= 0)
+        {
+            Vector3 powerUpSpawn = wallSpawnPoints[Random.Range(0, wallSpawnPoints.Length)].position;
+            if (powerUpSpawn != wallSpawnPos) Instantiate(prefabPowerUp, powerUpSpawn, Quaternion.identity, transform);
+            prefabPowerUp.transform.localScale = new Vector3(.5f, 1.5f, .5f);
+            prefabPowerUp.transform.position = new Vector3(0, .3f, 0);
+            control.powerUpTimer = 5;
+        }
 
         //Debug.Log(prefabPowerUp.type);
-        
+
     }
 
     void Update()
     {
-        prefabPowerUp.transform.localScale = new Vector3(1, 1, 1);
+        //Debug.Log(timer);
         transform.position += new Vector3(0, 0, -speed) * Time.deltaTime;
 
         if (pointOut.position.z < -20)

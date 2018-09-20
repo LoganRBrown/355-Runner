@@ -19,6 +19,8 @@ public class SceneController : MonoBehaviour {
 
     [HideInInspector] public int score = 0;
 
+    public float powerUpTimer = 3;
+
 	void Start () {
         Instantiate(prefabPlayerOne, playerOnePos, Quaternion.identity);
 
@@ -31,6 +33,19 @@ public class SceneController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        //int ps4 = 0;
+
+        //string[] names = Input.GetJoystickNames();
+        //for (int x =0; x < names.Length; x++)
+        //{
+        //    Debug.Log(names[x].Length);
+        //    if(names[x].Length == 19)
+        //    {
+        //        Debug.Log("PS4 connected");
+        //        ps4 = 1;
+        //    }
+        //}
+
         for(int i = tracks.Count - 1; i >=0; i--)
         {
             if (tracks[i].isDead)
@@ -41,6 +56,8 @@ public class SceneController : MonoBehaviour {
         }
 
         if (tracks.Count < 10) SpawnTrack();
+
+        powerUpTimer -= 1 * Time.deltaTime;
 
         CheckGameOver();
     }
