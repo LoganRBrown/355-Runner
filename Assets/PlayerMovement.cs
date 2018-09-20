@@ -30,27 +30,15 @@ public class PlayerMovement : MonoBehaviour {
 
     public float laneWidth = 2;
 
-    int playerOneLane = 0;
-
-    int playerTwoLane = 0;
-
     public GameObject otherPlayer;
 
-    public int playerOneHealth = 10;
+    public int playerHealth = 10;
 
-    public int playerTwoHealth = 10;
+    bool HasSwap = false;
 
-    bool oneHasSwap = false;
+    bool HasPush = false;
 
-    bool oneHasPush = false;
-
-    bool oneHasSlide = false;
-
-    bool twoHasSwap = false;
-
-    bool twoHasPush = false;
-
-    bool twoHasSlide = false;
+    bool HasSlide = false;
 
     bool inAir = true;
 
@@ -116,7 +104,7 @@ public class PlayerMovement : MonoBehaviour {
                 SpawnBullet();
             }
 
-            if (Input.GetButtonDown("Swap P1") && oneHasSwap)
+            if (Input.GetButtonDown("Swap P1") && HasSwap)
             {
                 Debug.Log("P1 Swap");
                 Vector3 otherPos = otherPlayer.transform.position;
@@ -126,10 +114,10 @@ public class PlayerMovement : MonoBehaviour {
 
                 transform.position = otherPos;
 
-                oneHasSwap = false;
+                HasSwap = false;
             }
 
-            if (Input.GetButtonDown("Push P1") && oneHasPush)
+            if (Input.GetButtonDown("Push P1") && HasPush)
             {
                 Debug.Log("P1 Push");
                 if (otherPlayer.transform.position.z == START)
@@ -143,10 +131,10 @@ public class PlayerMovement : MonoBehaviour {
                 }
                 else Debug.Log("Reached Maximum Lane");
 
-                oneHasPush = false;
+                HasPush = false;
             }
 
-            if (Input.GetButtonDown("Slide P1") && oneHasSlide)
+            if (Input.GetButtonDown("Slide P1") && HasSlide)
             {
                 Debug.Log("P1 Slide");
                 if (transform.position.z == SECONDLANE)
@@ -163,79 +151,9 @@ public class PlayerMovement : MonoBehaviour {
                 }
                 else Debug.Log("player reached start");
 
-                oneHasSlide = false;
+                HasSlide = false;
             }
         }
-
-        else
-        {
-            float h = Input.GetAxisRaw("Horizontal P2");
-            if (Input.GetButtonDown("Horizontal P2"))
-            {
-                if (h == -1) // if pressing left
-                {
-                    playerTwoLane--;
-                }
-                else if (h == 1) // if pressing right
-                {
-                    playerTwoLane++;
-                }
-
-            }
-
-            float targetX = playerTwoLane * laneWidth;
-
-            float x = (targetX - transform.position.x) * .1f;
-            transform.position += new Vector3(x, 0, 0);
-
-            if (Input.GetButtonDown("Jump P2"))
-            {
-                if (transform.position.y <= 0)
-                {
-                    velocity.y = 7;
-                }
-            }
-
-            if (Input.GetButtonDown("Swap P2") && twoHasSwap)
-            {
-                Vector3 otherPos = otherPlayer.transform.position;
-                Vector3 thisPos = transform.position;
-
-                otherPlayer.transform.position = thisPos;
-
-                transform.position = otherPos;
-            }
-
-            if (Input.GetButtonDown("Push P2") && twoHasPush)
-            {
-                if (otherPlayer.transform.position.z == START)
-                {
-                    otherPlayer.transform.position = new Vector3(0, 0, FIRSTLANE);
-                }
-
-                else if (otherPlayer.transform.position.z == FIRSTLANE)
-                {
-                    otherPlayer.transform.position = new Vector3(0, 0, SECONDLANE);
-                }
-                else Debug.Log("Reached Maximum Lane");
-            }
-
-            if (Input.GetButtonDown("Slide P2") && twoHasSlide)
-            {
-                if (transform.position.z == SECONDLANE)
-                {
-                    transform.position = new Vector3(0, 0, FIRSTLANE);
-                }
-
-                else if (transform.position.z == FIRSTLANE)
-                {
-                    transform.position = new Vector3(0, 0, START);
-                }
-                else Debug.Log("player reached start");
-            }
-        }
-
-
     }
 
     void OverlappingAABB(AABB other)
@@ -247,16 +165,13 @@ public class PlayerMovement : MonoBehaviour {
             switch (powerup.type) //use an enum
             {
                 case PowerUp.PowerUpType.Swap:
-                    if (!isPlayerTwo) oneHasSwap = true;
-                    else twoHasSwap = true;
+                    if (!isPlayerTwo) HasSwap = true;
                     break;
                 case PowerUp.PowerUpType.Push:
-                    if (!isPlayerTwo) oneHasPush = true;
-                    else twoHasPush = true;
+                    if (!isPlayerTwo) HasPush = true;
                     break;
                 case PowerUp.PowerUpType.Slide:
-                    if (!isPlayerTwo) oneHasSlide = true;
-                    else twoHasSlide = true;
+                    if (!isPlayerTwo) HasSlide = true;
                     break;
                 default:
                     Debug.Log("something might be broken. Check PlayerMovement, Track, or PowerUp Scripts.");
@@ -297,19 +212,21 @@ public class PlayerMovement : MonoBehaviour {
     void CheckDeath()
     {
 
+        PlayerTwoMovement playerTwo = otherPlayer.GetComponent<PlayerTwoMovement>();
+
         if (transform.position.z <= -5)
         {
             if (!isPlayerTwo) playerOneIsDead = true;
             else playerTwoIsDead = true;
         }
 
-        if (playerOneHealth == 0)
+        if (playerHealth == 0)
         {
             playerOneIsDead = true;
             print("Player 2 wins");
         }
 
-        if (playerTwoHealth == 0)
+        if ( playerTwo.playerHealth == 0)
         {
             playerTwoIsDead = true;
             print("Player 1 wins");
